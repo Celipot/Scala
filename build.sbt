@@ -12,8 +12,8 @@ scalaVersion := "2.13.3"
 // and the value is "2.13.3"
 
 // It's possible to define many kinds of settings, such as:
-
-name := "hello-world"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % Test
+name := "scala-project"
 organization := "ch.epfl.scala"
 version := "1.0"
 
