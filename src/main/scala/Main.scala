@@ -1,6 +1,7 @@
 import parseurNoRegex._
+import exo._
 object main extends App {
-
-  println(FromFile[Point]("textfile.csv",Point.pointFromLine(_)))
+  exo.execute()
 
 }
+
