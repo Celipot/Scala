@@ -30,4 +30,17 @@ def connection():Unit={
     Ignore.ignore("DROP TABLE people")
   }
 }
+def tablecreation ():Unit ={
+    Ignore.ignore("CREATE TABLE IF NOT EXISTS Airport (id int PRIMARY KEY, ident varchar(255),name varchar(255), iso_country varchar(255))")
+    Ignore.ignore("CREATE TABLE IF NOT EXISTS Country (id int PRIMARY KEY,code varchar(255), name varchar(255))")
+    Ignore.ignore("CREATE TABLE IF NOT EXISTS Runway (id int PRIMARY KEY,airport_ref int, airport_ident varchar(255),surface varchar(255),le_ident varchar(255))")
+
+}
+
+def insertAirport (l : List[Either[String,T]]): Unit{
+    
+}
+
+
+
 }
