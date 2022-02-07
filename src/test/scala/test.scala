@@ -29,6 +29,12 @@ import org.scalatest.FunSuite
      }
     }
    }
-
+  test("Test string"){
+    val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
+    Select.iterator[String]("select iso_country, count (*) As nbr_airport  from airport group by iso_country order by nbr_airport DESC limit 10 ").foreach{line=>
+      println(line)
+     }
+    }
+   }
 
  }

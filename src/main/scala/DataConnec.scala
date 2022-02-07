@@ -9,6 +9,7 @@ object DataConnec{
   object Person {
     case class Name(name: String)
   }
+  case class Result(str : String, count : Int)
   case class Student (id : Int, name: String)
 
 def connection():Unit={
@@ -69,6 +70,7 @@ def insertCountry (): Unit={
     } }
   }
 }
+
 def insertRunway (): Unit={
   val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
   val a = FromFile[Runway]("src/main/ressource/runways.csv",Runway.runwayFromLine)
@@ -81,4 +83,47 @@ def insertRunway (): Unit={
     } }
   }
 }
+
+ def top10 (): Unit={
+    val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
+    println("Highest number of airports")
+    Select.iterator[Result]("select iso_country, " +
+                            "count (*) As nbr_airport  " +
+                            "from airport " +
+                            "group by iso_country " +
+                            "order by nbr_airport DESC " +
+                            "limit 10 ").foreach{line=>
+                            println("Iso_country : "+line.str+" with "+line.count+" airport(s)")
+    }
+     println("\n Lowest number of airports")
+    Select.iterator[Result]("select iso_country, count (*) As nbr_airport  " +
+                            "from airport " +
+                            "group by iso_country " +
+                            "order by nbr_airport ASC " +
+                            "limit 10 ").foreach{line=>
+      println("Iso_country : "+line.str+" with "+line.count+" airport(s)")
+     }
+    }
+   }
+
+  def countrysurface():Unit={
+    val request = (s"SELECT DISTINCT iso_country, surface "+
+                    "FROM runway" +
+                    "INNER JOIN airport" +
+                    "ON airport_ref = airport.id"+
+                    "WHERE iso_country = 'US'"+
+                    "LIMIT 20")
+  }
+  def toplatitude():Unit = {
+    val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
+    println("\n most common le_ident and their count")
+    Select.iterator[Result]("SELECT le_ident, count(*) " +
+                            "FROM runway "+
+                            "GROUP BY le_ident "+
+                            "ORDER BY count DESC "+
+                            "LIMIT 10").foreach{line=>
+                            println("le_ident : "+line.str+" with count : "+line.count)
+        }
+    }
+    }
 }
