@@ -1,8 +1,11 @@
+package db
+
 import com.rocketfuel.sdbc.PostgreSql._
-import parseurNoRegex._
-import Airport._
-import Country._
-import Runway._
+import util.parseurNoRegex._
+import model.Airport._
+import model.Country._
+import model.Runway._
+
 object DataConnec{
       case class Person(id: Int, name: String)
 
@@ -47,7 +50,7 @@ def tablecreation ():Unit ={
 
 def insertAirport (): Unit={
   val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
-  val a = FromFile[Airport]("src/main/ressource/airports.csv",Airport.airportFromLine)
+  val a = FromFile[model.Airport]("src/main/ressource/airports.csv",model.Airport.airportFromLine)
   a.foreach{line =>
     line match { 
       case Right(line)=>
@@ -60,7 +63,7 @@ def insertAirport (): Unit={
 
 def insertCountry (): Unit={
   val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
-  val a = FromFile[Country]("src/main/ressource/countries.csv",Country.countryFromLine)
+  val a = FromFile[model.Country]("src/main/ressource/countries.csv",model.Country.countryFromLine)
   a.foreach{line =>
     line match {
       case Right(line)=> 
@@ -73,7 +76,7 @@ def insertCountry (): Unit={
 
 def insertRunway (): Unit={
   val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
-  val a = FromFile[Runway]("src/main/ressource/runways.csv",Runway.runwayFromLine)
+  val a = FromFile[model.Runway]("src/main/ressource/runways.csv",model.Runway.runwayFromLine)
   a.foreach{line =>
     line match {
       case Right(line)=> 
