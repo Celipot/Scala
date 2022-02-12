@@ -13,6 +13,7 @@ object DataConnec{
     case class Name(name: String)
   }
   case class Result(str : String, count : Int)
+  case class ResultQuery(country: String, airport: String ,surface: String)
   case class ResultString(countryName : String, surfaces : String)
   case class Student (id : Int, name: String)
 
@@ -137,4 +138,32 @@ def insertRunway (): Unit={
         }
     }
     }
+  def queryCountryName(str : String): Unit={
+    val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
+    println("\n most common le_ident and their count")
+    Select.iterator[ResultQuery](s"""SELECT country.name as "Cname", airport.name as "Airport",surface 
+                    FROM runway 
+                    INNER JOIN airport 
+                    ON airport_ref = airport.id
+				          	INNER JOIN country
+				           	ON iso_country = country.code
+				          	WHERE country.name Ilike '%${str}%'""").foreach{queryCountryName=>
+                            println(s"Country Name : ${queryCountryName.country}, Airport : ${queryCountryName.airport}, Surface : ${queryCountryName.surface}")
+        }
+    }
+  }
+    def queryCountryCode(str : String): Unit={
+    val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
+    println("\n most common le_ident and their count")
+    Select.iterator[ResultQuery](s"""SELECT country.name as "Cname", airport.name as "Airport",surface,country.code 
+                    FROM runway 
+                    INNER JOIN airport 
+                    ON airport_ref = airport.id
+					          INNER JOIN country
+					          ON iso_country = country.code
+				          	WHERE country.code = UPPER('${str}')""").foreach{queryCountryCode=>
+                            println(s"Country Name : ${queryCountryCode.country}, Airport : ${queryCountryCode.airport}, Surface : ${queryCountryCode.surface}")
+        }
+    }
+  }
 }

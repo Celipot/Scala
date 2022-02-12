@@ -8,6 +8,8 @@ object main extends App {
   db.DataConnec.top10()
   db.DataConnec.toplatitude()
   db.DataConnec.countrysurface()
+  db.DataConnec.queryCountryName("zimb")
+  db.DataConnec.queryCountryCode("dz")
 }
 
 
