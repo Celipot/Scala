@@ -53,6 +53,7 @@ def tablecreation ():Unit ={
 def insertAirport (): Unit={
   val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
   val airport = FromFile[model.Airport]("src/main/ressource/airports.csv",model.Airport.airportFromLine)
+  if (Check(airport)){
   airport.foreach{line =>
     line match { 
       case Right(line)=>
@@ -60,12 +61,13 @@ def insertAirport (): Unit={
       Ignore.ignore(request)
       case Left(line) => println(line)
     } }
-  }
+  }}
 }
 
 def insertCountry (): Unit={
   val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
   val country = FromFile[model.Country]("src/main/ressource/countries.csv",model.Country.countryFromLine)
+  if (Check(country)){
   country.foreach{line =>
     line match {
       case Right(line)=> 
@@ -73,12 +75,13 @@ def insertCountry (): Unit={
       Ignore.ignore(request)
       case Left(line) => println(line)
     } }
-  }
+  }}
 }
 
 def insertRunway (): Unit={
   val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
   val runway = FromFile[model.Runway]("src/main/ressource/runways.csv",model.Runway.runwayFromLine)
+  if (Check(runway)){
   runway.foreach{line =>
     line match {
       case Right(line)=> 
@@ -86,6 +89,7 @@ def insertRunway (): Unit={
       Ignore.ignore(request)
       case Left(line) => println(line)
     } }
+  }
   }
 }
 
