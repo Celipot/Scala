@@ -1,7 +1,7 @@
 package db
 
 import com.rocketfuel.sdbc.PostgreSql._
-import util.parseurNoRegex._
+import utility.parseurNoRegex._
 import model.Airport._
 import model.Country._
 import model.Runway._
@@ -13,6 +13,7 @@ object DataConnec{
     case class Name(name: String)
   }
   case class Result(str : String, count : Int)
+  case class ResultString(countryName : String, surfaces : String)
   case class Student (id : Int, name: String)
 
 def connection():Unit={
@@ -90,41 +91,48 @@ def insertRunway (): Unit={
  def top10 (): Unit={
     val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
     println("Highest number of airports")
-    Select.iterator[Result]("select iso_country, " +
-                            "count (*) As nbr_airport  " +
-                            "from airport " +
-                            "group by iso_country " +
-                            "order by nbr_airport DESC " +
-                            "limit 10 ").foreach{top10=>
+    Select.iterator[Result]("""select iso_country, 
+                            count (*) As nbr_airport 
+                            from airport 
+                            group by iso_country 
+                            order by nbr_airport DESC 
+                            limit 10 """).foreach{top10=>
                             println(s"Iso_country : ${top10.str} with ${top10.count} airport(s)")
     }
      println("\n Lowest number of airports")
-    Select.iterator[Result]("select iso_country, count (*) As nbr_airport  " +
-                            "from airport " +
-                            "group by iso_country " +
-                            "order by nbr_airport ASC " +
-                            "limit 10 ").foreach{top10=>
+    Select.iterator[Result]("""select iso_country, count (*) As nbr_airport 
+                            from airport 
+                            group by iso_country 
+                            order by nbr_airport ASC 
+                            limit 10 """).foreach{top10=>
       println(s"Iso_country : ${top10.str} with ${top10.count} airport(s)")
      }
     }
    }
 
   def countrysurface():Unit={
-    val request = (s"SELECT DISTINCT iso_country, surface "+
-                    "FROM runway" +
-                    "INNER JOIN airport" +
-                    "ON airport_ref = airport.id"+
-                    "WHERE iso_country = 'US'"+
-                    "LIMIT 20")
+    val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
+    println("\n List of the countries' surfaces")
+    Select.iterator[ResultString](s"""SELECT country.name as "CountryName", string_agg(distinct surface, ', ') as "Surfaces" 
+                    FROM runway 
+                    INNER JOIN airport 
+                    ON airport_ref = airport.id
+				          	INNER JOIN country
+				          	ON iso_country = country.code
+					          GROUP BY country.name""").foreach{countrySurface=>
+                      println(s"CountryName : ${countrySurface.countryName}, with surfaces : ${countrySurface.surfaces}")
+
+                    }
   }
+}
   def toplatitude():Unit = {
     val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
     println("\n most common le_ident and their count")
-    Select.iterator[Result]("SELECT le_ident, count(*) " +
-                            "FROM runway "+
-                            "GROUP BY le_ident "+
-                            "ORDER BY count DESC "+
-                            "LIMIT 10").foreach{toplatitude=>
+    Select.iterator[Result]("""SELECT le_ident, count(*) 
+                            FROM runway 
+                            GROUP BY le_ident 
+                            ORDER BY count DESC 
+                            LIMIT 10""").foreach{toplatitude=>
                             println(s"le_ident : ${toplatitude.str} with count : ${toplatitude.count}")
         }
     }
