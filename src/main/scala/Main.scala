@@ -1,6 +1,5 @@
-import exo._
-import DataConnec._
-import javax.xml.crypto.Data
+import db.DataConnec._
+
 object main extends App {
   exo.execute()
   // DataConnec.tablecreation()
