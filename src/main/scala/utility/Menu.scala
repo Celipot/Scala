@@ -31,7 +31,7 @@ object Menu {
     def queryName(): Unit = {
         println("Enter the name of the country you want to search.");
         readLine() match {
-            case x => println(x);
+            case x => queryCountryName(x);
             query()
         }
 
@@ -41,7 +41,7 @@ object Menu {
     def queryCode(): Unit = {
         println("Enter the code of the country you want to search.");
         readLine() match {
-            case x => println(x)
+            case x => queryCountryCode(x);
             query()
         }
     }

@@ -1,5 +1,5 @@
 package model
-
+import Nes._
 case class Country (id : Int , code : String , name : String)
 
 object Country {

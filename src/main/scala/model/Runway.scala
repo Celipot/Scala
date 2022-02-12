@@ -1,5 +1,5 @@
 package model
-
+import Nes._
 case class Runway (id : Int , airport_ref : Int, airport_ident : String, surface : String, le_ident :String)
 
 object Runway {
