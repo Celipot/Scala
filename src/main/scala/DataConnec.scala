@@ -92,16 +92,16 @@ def insertRunway (): Unit={
                             "from airport " +
                             "group by iso_country " +
                             "order by nbr_airport DESC " +
-                            "limit 10 ").foreach{line=>
-                            println("Iso_country : "+line.str+" with "+line.count+" airport(s)")
+                            "limit 10 ").foreach{top10=>
+                            println(s"Iso_country : ${top10.str} with ${top10.count} airport(s)")
     }
      println("\n Lowest number of airports")
     Select.iterator[Result]("select iso_country, count (*) As nbr_airport  " +
                             "from airport " +
                             "group by iso_country " +
                             "order by nbr_airport ASC " +
-                            "limit 10 ").foreach{line=>
-      println("Iso_country : "+line.str+" with "+line.count+" airport(s)")
+                            "limit 10 ").foreach{top10=>
+      println(s"Iso_country : ${top10.str} with ${top10.count} airport(s)")
      }
     }
    }
@@ -121,8 +121,8 @@ def insertRunway (): Unit={
                             "FROM runway "+
                             "GROUP BY le_ident "+
                             "ORDER BY count DESC "+
-                            "LIMIT 10").foreach{line=>
-                            println("le_ident : "+line.str+" with count : "+line.count)
+                            "LIMIT 10").foreach{toplatitude=>
+                            println(s"le_ident : ${toplatitude.str} with count : ${toplatitude.count}")
         }
     }
     }
