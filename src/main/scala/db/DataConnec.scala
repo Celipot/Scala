@@ -1,7 +1,7 @@
 package db
 
 import com.rocketfuel.sdbc.PostgreSql._
-import util.parseurNoRegex._
+import utility.ParseurNoRegex._
 import model.Airport._
 import model.Country._
 import model.Runway._

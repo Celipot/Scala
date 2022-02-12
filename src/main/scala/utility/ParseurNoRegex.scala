@@ -1,8 +1,8 @@
-package util
+package utility
 
 import scala.io.Source
 
-object parseurNoRegex {
+object ParseurNoRegex {
   def FromFile[T](path: String, f: Array[String] => Either[String,T]): List[Either[String,T]] = {
         Source.fromFile(path).getLines()
             .toList

@@ -1,5 +1,7 @@
 package model
 
+import model.Nes
+
 case class Airport (id : Int , ident : String, name : String, iso_country : String)
 
 object Airport {

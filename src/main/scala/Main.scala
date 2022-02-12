@@ -1,14 +1,14 @@
 import db.DataConnec._
+import utility.Menu._
 
 object main extends App {
-  exo.execute()
   // DataConnec.tablecreation()
   // DataConnec.insertAirport()
   // DataConnec.insertCountry()
   // DataConnec.insertRunway()
-  DataConnec.top10()
-  DataConnec.toplatitude()
-
+  //DataConnec.top10()
+  //DataConnec.toplatitude()
+  home()
 }
 
 
