@@ -1,9 +1,8 @@
 package model
 
-class Nes(val string: Option[String]) extends AnyVal {
-    def foo: Nes = string.isEmpty match {
-        case true => new Nes(None)
-        case false => new Nes(string)
+object Nes {
+    def apply(string : String): Option[String] = string.isEmpty match {
+        case true => None
+        case false => Some(string)
     }
 }
-
