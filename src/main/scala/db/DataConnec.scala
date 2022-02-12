@@ -52,8 +52,8 @@ def tablecreation ():Unit ={
 
 def insertAirport (): Unit={
   val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
-  val a = FromFile[model.Airport]("src/main/ressource/airports.csv",model.Airport.airportFromLine)
-  a.foreach{line =>
+  val airport = FromFile[model.Airport]("src/main/ressource/airports.csv",model.Airport.airportFromLine)
+  airport.foreach{line =>
     line match { 
       case Right(line)=>
       val request =(s"INSERT INTO Airport (id,ident,name,iso_country) VALUES (${line.id},'${line.ident}','${line.name}','${line.iso_country}')");
@@ -65,8 +65,8 @@ def insertAirport (): Unit={
 
 def insertCountry (): Unit={
   val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
-  val a = FromFile[model.Country]("src/main/ressource/countries.csv",model.Country.countryFromLine)
-  a.foreach{line =>
+  val country = FromFile[model.Country]("src/main/ressource/countries.csv",model.Country.countryFromLine)
+  country.foreach{line =>
     line match {
       case Right(line)=> 
       val request = (s"INSERT INTO Country (id,code,name) VALUES (${line.id},'${line.code}','${line.name}')");
@@ -78,8 +78,8 @@ def insertCountry (): Unit={
 
 def insertRunway (): Unit={
   val conn = Connection.using("jdbc:postgresql://localhost:5432/test?user=postgres&password=password"){implicit connection =>
-  val a = FromFile[model.Runway]("src/main/ressource/runways.csv",model.Runway.runwayFromLine)
-  a.foreach{line =>
+  val runway = FromFile[model.Runway]("src/main/ressource/runways.csv",model.Runway.runwayFromLine)
+  runway.foreach{line =>
     line match {
       case Right(line)=> 
       val request = (s"INSERT INTO Runway (id,airport_ref,airport_ident,surface,le_ident) VALUES (${line.id},${line.airport_ref},'${line.airport_ident}','${line.surface}','${line.le_ident}')");
