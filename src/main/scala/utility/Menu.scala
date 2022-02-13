@@ -13,7 +13,7 @@ object Menu {
         readLine() match {
             case "1" => query()
             case "2" => report()
-            case "reset" =>  { tablecreation();
+            case "reset" =>  {tablecreation();
                 insertAirport();
                 insertCountry();
                 insertRunway();

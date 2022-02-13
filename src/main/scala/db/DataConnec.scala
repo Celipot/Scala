@@ -31,7 +31,7 @@ def insertAirport (): Unit={
   airport.foreach{line =>
     line match { 
       case Right(line)=>
-      val request =(s"INSERT INTO Airport (id,ident,name,iso_country) VALUES (${line.id},'${line.ident}','${line.name}','${line.iso_country}')");
+      val request =(s"INSERT INTO Airport (id,ident,name,iso_country) VALUES (${line.id},'${line.ident.ident}','${line.name.nes}','${line.iso_country.iso}')");
       Ignore.ignore(request)
       case Left(line) => println(line)
     } }
@@ -45,7 +45,7 @@ def insertCountry (): Unit={
   country.foreach{line =>
     line match {
       case Right(line)=> 
-      val request = (s"INSERT INTO Country (id,code,name) VALUES (${line.id},'${line.code}','${line.name}')");
+      val request = (s"INSERT INTO Country (id,code,name) VALUES (${line.id},'${line.code.iso}','${line.name.nes}')");
       Ignore.ignore(request)
       case Left(line) => println(line)
     } }
@@ -59,7 +59,7 @@ def insertRunway (): Unit={
   runway.foreach{line =>
     line match {
       case Right(line)=> 
-      val request = (s"INSERT INTO Runway (id,airport_ref,airport_ident,surface,le_ident) VALUES (${line.id},${line.airport_ref},'${line.airport_ident}','${line.surface}','${line.le_ident}')");
+      val request = (s"INSERT INTO Runway (id,airport_ref,airport_ident,surface,le_ident) VALUES (${line.id},${line.airport_ref},'${line.airport_ident.ident}','${line.surface.nes}','${line.le_ident.nes}')");
       Ignore.ignore(request)
       case Left(line) => println(line)
     } }
