@@ -8,11 +8,19 @@ object Menu {
         println("Welcome to the Airport Database");
         println("Type \"1\" to search airports of a country");
         println("Type \"2\" to access reports");
+        println("Type \"reset\" to reset database");
         println("Type \"exit\" to exit.");
         readLine() match {
             case "1" => query()
             case "2" => report()
+            case "reset" =>  { tablecreation();
+                insertAirport();
+                insertCountry();
+                insertRunway();
+                home()
+            }
             case "exit" => ()
+            case _ => home()
         }
     }
 
@@ -25,25 +33,21 @@ object Menu {
             case "1" => queryName()
             case "2" => queryCode()
             case "exit" => home()
+            case _ => query()
         }
     }
 
     def queryName(): Unit = {
         println("Enter the name of the country you want to search.");
-        readLine() match {
-            case x => queryCountryName(x);
-            query()
-        }
-
+        queryCountryName(readLine());
+        query()
     }
 
     
     def queryCode(): Unit = {
         println("Enter the code of the country you want to search.");
-        readLine() match {
-            case x => queryCountryCode(x);
-            query()
-        }
+        queryCountryCode(readLine());
+        query()
     }
 
     def report(): Unit = {
@@ -60,6 +64,7 @@ object Menu {
             case "3" => toplatitude();
                 report()
             case "exit" => home()
+            case _ => report()
         }
     }
 }
