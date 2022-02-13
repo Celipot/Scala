@@ -8,4 +8,3 @@ object Nes {
         case false => Right(new Nes(str))
     }
 }
-
